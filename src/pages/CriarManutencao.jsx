@@ -375,7 +375,7 @@ export default function CriarManutencao() {
           </select>
         </div>
 
-        {userType !== 'morador' && <MoradorFooter />}
+        <MoradorFooter />
       </div>
     </AuthGuard>
   );
