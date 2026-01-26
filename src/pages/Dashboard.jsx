@@ -331,7 +331,7 @@ export default function Dashboard() {
       }
 
     } catch (error) {
-      if (error.name === 'CanceledError' || error.code === 'ERR_CANCELED') {
+      if (error.name === 'CanceledError' || error.code === 'ERR_CANCELED' || error.code === 'ECONNABORTED' || error.name === 'AbortError' || error.message?.includes('aborted')) {
         return;
       }
       console.error('[DATA_INTEGRITY] Erro crítico no dashboard:', error);
@@ -387,7 +387,7 @@ export default function Dashboard() {
         setMoradorLogado(role.morador);
         
         loadDashboardData(role, abortController.signal).catch(err => {
-          if (err.name === 'CanceledError' || err.code === 'ERR_CANCELED') return;
+          if (err.name === 'CanceledError' || err.code === 'ERR_CANCELED' || err.code === 'ECONNABORTED' || err.name === 'AbortError' || err.message?.includes('aborted')) return;
           // Silently fail
         });
         
