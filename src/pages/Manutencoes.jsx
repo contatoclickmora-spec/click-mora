@@ -85,18 +85,28 @@ export default function Manutencoes() {
   };
 
   const hasMaintenance = (day) => {
-    return manutencoes.some(m => {
-      const inicio = parseISO(m.data_inicio);
-      const fim = parseISO(m.data_fim);
-      return isWithinInterval(day, { start: inicio, end: fim });
+    return manutencoes.some((m) => {
+      const inicio = m?.data_inicio ? parseISO(m.data_inicio) : null;
+      const fim = m?.data_fim ? parseISO(m.data_fim) : null;
+      if (!inicio || isNaN(inicio.getTime()) || !fim || isNaN(fim.getTime())) return false;
+      try {
+        return isWithinInterval(day, { start: inicio, end: fim });
+      } catch (_) {
+        return false;
+      }
     });
   };
 
   const getMaintenancesForDay = (day) => {
-    return manutencoes.filter(m => {
-      const inicio = parseISO(m.data_inicio);
-      const fim = parseISO(m.data_fim);
-      return isWithinInterval(day, { start: inicio, end: fim });
+    return manutencoes.filter((m) => {
+      const inicio = m?.data_inicio ? parseISO(m.data_inicio) : null;
+      const fim = m?.data_fim ? parseISO(m.data_fim) : null;
+      if (!inicio || isNaN(inicio.getTime()) || !fim || isNaN(fim.getTime())) return false;
+      try {
+        return isWithinInterval(day, { start: inicio, end: fim });
+      } catch (_) {
+        return false;
+      }
     });
   };
 
@@ -290,6 +300,7 @@ export default function Manutencoes() {
               {userType === 'administrador' && (
                 <Button
                   size="sm"
+                  onClick={() => navigate(createPageUrl('CriarManutencao'))}
                   className="bg-[#3b5998] hover:bg-[#2d4373]"
                 >
                   <Plus className="w-4 h-4 mr-2" />
@@ -324,8 +335,8 @@ export default function Manutencoes() {
                         <div className="flex-1 min-w-0">
                           <h4 className="font-bold text-gray-900 mb-1">{manutencao.titulo}</h4>
                           <p className="text-sm text-gray-600 mb-2">
-                            {format(parseISO(manutencao.data_inicio), 'dd/MM/yyyy')} até{' '}
-                            {format(parseISO(manutencao.data_fim), 'dd/MM/yyyy')}
+                            {(() => { try { const d = manutencao?.data_inicio ? parseISO(manutencao.data_inicio) : null; return d && !isNaN(d.getTime()) ? format(d, 'dd/MM/yyyy') : '-'; } catch { return '-'; } })()} até{' '}
+                            {(() => { try { const d = manutencao?.data_fim ? parseISO(manutencao.data_fim) : null; return d && !isNaN(d.getTime()) ? format(d, 'dd/MM/yyyy') : '-'; } catch { return '-'; } })()}
                           </p>
                           {manutencao.descricao && (
                             <p className="text-sm text-gray-700 mb-2">{manutencao.descricao}</p>
