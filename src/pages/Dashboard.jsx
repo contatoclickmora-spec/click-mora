@@ -131,14 +131,6 @@ export default function Dashboard() {
       key: 'enquetes'
     },
     {
-      icon: Wrench,
-      titulo: 'Manutenções',
-      subtitulo: 'Programar manutenções',
-      path: createPageUrl('Manutencoes'),
-      color: '#f59e0b',
-      key: 'manutencoes'
-    },
-    {
       icon: Siren,
       titulo: 'SOS',
       subtitulo: 'Emergência',
@@ -230,7 +222,7 @@ export default function Dashboard() {
   };
 
   // Filtrar todasFuncionalidades baseado nas permissões
-  const funcionalidadesVisiveis = todasFuncionalidades.filter(f => filtrarPorPermissao(f.key));
+  const funcionalidadesVisiveis = todasFuncionalidades.filter(f => f.key !== 'manutencoes').filter(f => filtrarPorPermissao(f.key));
 
   const getAcessoRapidoDinamico = () => {
     if (acessosRecentes.length === 0) {
@@ -515,7 +507,6 @@ export default function Dashboard() {
     { icon: Package, titulo: 'Encomendas', path: createPageUrl('GerenciamentoEncomendas'), key: 'encomendas' },
     { icon: MessageSquare, titulo: 'Chamados', path: createPageUrl('ChamadosPortaria'), key: 'chamados' },
     { icon: ClipboardList, titulo: 'Visitantes', path: createPageUrl('VisitantesPortaria'), key: 'visitantes' },
-    { icon: Wrench, titulo: 'Manutenções', path: createPageUrl('Manutencoes'), key: 'manutencoes' },
     { icon: FileText, titulo: 'Documentos', path: createPageUrl('Documentos'), key: 'documentos' },
     { icon: ShoppingBag, titulo: 'Marketplace', path: createPageUrl('Marketplace'), key: 'marketplace' },
     { icon: Users, titulo: 'Moradores', path: createPageUrl('Moradores'), key: 'moradores' },

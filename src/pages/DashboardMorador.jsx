@@ -97,14 +97,6 @@ export default function DashboardMorador() {
       key: 'vistoria'
     },
     {
-      icon: Wrench,
-      titulo: 'Manutenções',
-      subtitulo: 'Ver programação',
-      path: createPageUrl('Manutencoes'),
-      color: '#f59e0b',
-      key: 'manutencoes'
-    },
-    {
       icon: Siren,
       titulo: 'SOS',
       subtitulo: 'Emergência',
@@ -395,7 +387,7 @@ export default function DashboardMorador() {
 
   // Filtrar funcionalidades baseado nas permissões do perfil morador
   // Usar cache instantâneo - nunca bloquear
-  const funcionalidadesVisiveis = filtrarItensPorPermissao(todasFuncionalidades, permissoesMorador, 'morador', 'key');
+  const funcionalidadesVisiveis = filtrarItensPorPermissao(todasFuncionalidades.filter(f => f.key !== 'manutencoes'), permissoesMorador, 'morador', 'key');
 
   // Acesso Rápido Dinâmico (2 principais que estejam visíveis)
   const acessoRapido = [
