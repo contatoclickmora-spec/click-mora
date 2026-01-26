@@ -8,7 +8,6 @@ import ComoUsar from './pages/ComoUsar';
 import ConfiguracoesSistema from './pages/ConfiguracoesSistema';
 import ConfiguracoesWhatsApp from './pages/ConfiguracoesWhatsApp';
 import ConfiguracoesWhatsAppAdmin from './pages/ConfiguracoesWhatsAppAdmin';
-import CriarManutencao from './pages/CriarManutencao';
 import Dashboard from './pages/Dashboard';
 import DashboardMorador from './pages/DashboardMorador';
 import DetalhesEnquete from './pages/DetalhesEnquete';
@@ -25,8 +24,6 @@ import GerenciamentoUsuarios from './pages/GerenciamentoUsuarios';
 import GestaoCondominios from './pages/GestaoCondominios';
 import GestaoUsuarios from './pages/GestaoUsuarios';
 import LogsAuditoria from './pages/LogsAuditoria';
-import ManutencaoDetalhes from './pages/ManutencaoDetalhes';
-import Manutencoes from './pages/Manutencoes';
 import Marketplace from './pages/Marketplace';
 import MonitoramentoSistema from './pages/MonitoramentoSistema';
 import Moradores from './pages/Moradores';
@@ -62,7 +59,6 @@ export const PAGES = {
     "ConfiguracoesSistema": ConfiguracoesSistema,
     "ConfiguracoesWhatsApp": ConfiguracoesWhatsApp,
     "ConfiguracoesWhatsAppAdmin": ConfiguracoesWhatsAppAdmin,
-    "CriarManutencao": CriarManutencao,
     "Dashboard": Dashboard,
     "DashboardMorador": DashboardMorador,
     "DetalhesEnquete": DetalhesEnquete,
@@ -79,8 +75,6 @@ export const PAGES = {
     "GestaoCondominios": GestaoCondominios,
     "GestaoUsuarios": GestaoUsuarios,
     "LogsAuditoria": LogsAuditoria,
-    "ManutencaoDetalhes": ManutencaoDetalhes,
-    "Manutencoes": Manutencoes,
     "Marketplace": Marketplace,
     "MonitoramentoSistema": MonitoramentoSistema,
     "Moradores": Moradores,
