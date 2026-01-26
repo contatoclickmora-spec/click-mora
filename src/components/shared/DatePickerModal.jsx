@@ -9,20 +9,27 @@ import {
 import { Button } from "@/components/ui/button";
 
 export default function DatePickerModal({ open, onClose, title, onConfirm, initialDate, minDate }) {
-  const [selectedDate, setSelectedDate] = useState(initialDate ? new Date(initialDate) : new Date());
-  const [viewMonth, setViewMonth] = useState(
-    initialDate ? new Date(initialDate).getMonth() : new Date().getMonth()
-  );
-  const [viewYear, setViewYear] = useState(
-    initialDate ? new Date(initialDate).getFullYear() : new Date().getFullYear()
-  );
+  const [selectedDate, setSelectedDate] = useState(() => {
+    const d = initialDate ? new Date(initialDate) : new Date();
+    return isNaN(d.getTime()) ? new Date() : d;
+  });
+  const [viewMonth, setViewMonth] = useState(() => {
+    const d = initialDate ? new Date(initialDate) : new Date();
+    return isNaN(d.getTime()) ? new Date().getMonth() : d.getMonth();
+  });
+  const [viewYear, setViewYear] = useState(() => {
+    const d = initialDate ? new Date(initialDate) : new Date();
+    return isNaN(d.getTime()) ? new Date().getFullYear() : d.getFullYear();
+  });
 
   useEffect(() => {
     if (initialDate) {
       const date = new Date(initialDate);
-      setSelectedDate(date);
-      setViewMonth(date.getMonth());
-      setViewYear(date.getFullYear());
+      if (!isNaN(date.getTime())) {
+        setSelectedDate(date);
+        setViewMonth(date.getMonth());
+        setViewYear(date.getFullYear());
+      }
     }
   }, [initialDate]);
 

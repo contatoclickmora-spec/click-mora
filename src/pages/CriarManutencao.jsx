@@ -429,23 +429,27 @@ export default function CriarManutencao() {
         </Dialog>
 
         {/* Modal Data Início */}
-        <DatePickerModal
-          open={showInicioModal}
-          onClose={() => setShowInicioModal(false)}
-          title="Início"
-          onConfirm={setDataInicio}
-          initialDate={dataInicio}
-        />
+        {showInicioModal && (
+          <DatePickerModal
+            open={showInicioModal}
+            onClose={() => setShowInicioModal(false)}
+            title="Início"
+            onConfirm={setDataInicio}
+            initialDate={dataInicio}
+          />
+        )}
 
         {/* Modal Data Fim */}
-        <DatePickerModal
-          open={showFimModal}
-          onClose={() => setShowFimModal(false)}
-          title="Fim"
-          onConfirm={setDataFim}
-          initialDate={dataFim}
-          minDate={dataInicio}
-        />
+        {showFimModal && (
+          <DatePickerModal
+            open={showFimModal}
+            onClose={() => setShowFimModal(false)}
+            title="Fim"
+            onConfirm={setDataFim}
+            initialDate={dataFim}
+            minDate={dataInicio}
+          />
+        )}
       </div>
     </AuthGuard>
   );
