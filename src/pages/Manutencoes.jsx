@@ -293,7 +293,8 @@ export default function Manutencoes() {
             </CardContent>
           </Card>
 
-          {/* Lista de Manutenções do Dia (mantida) */
+          {/* Lista de Manutenções do Dia (mantida) */}
+*/
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-bold text-gray-900">
