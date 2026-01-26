@@ -168,7 +168,10 @@ export default function NotificacoesWhatsApp() {
       setSelectedMoradores(allIds);
 
     } catch (err) {
-      console.error("[NOTIFICAÇÕES WHATSAPP] ❌ Erro crítico ao carregar:", err, err.stack);
+      if (err?.name === 'CanceledError' || err?.code === 'ERR_CANCELED' || err?.code === 'ECONNABORTED' || err?.name === 'AbortError' || err?.message?.includes('aborted')) {
+        return;
+      }
+      console.error("[NOTIFICAÇÕES WHATSApp] ❌ Erro crítico ao carregar:", err, err.stack);
       setMoradoresComEncomendas([]);
       setSelectedMoradores(new Set());
       setContextLoaded(true);
