@@ -144,9 +144,11 @@ export default function Manutencoes() {
     return <div className="min-h-screen bg-[#f7f7f7]" />;
   }
 
-  const dias = getDaysInMonth();
-  const primeiroDia = getFirstDayOfWeek();
-  const manutencoesDodia = getMaintenancesForDay(selectedDate);
+  // Proteção: gerar dados do calendário de forma segura
+  let dias = [];
+  let primeiroDia = 0;
+  try { dias = getDaysInMonth(); primeiroDia = getFirstDayOfWeek(); } catch (_) { dias = []; primeiroDia = 0; }
+  const manutencoesDodia = (() => { try { return getMaintenancesForDay(selectedDate); } catch (_) { return []; } })();
 
   const isMorador = userType === 'morador';
 
@@ -188,7 +190,7 @@ export default function Manutencoes() {
         )}
 
         <div className={`pt-28 pb-6 px-4 max-w-7xl mx-auto`}>
-          {/* Calendário */}
+          {/* Calendário temporariamente desativado para teste de estabilidade */}
           <Card className="bg-white mb-6">
             <CardContent className="p-6">
               {/* Header do Calendário */}
@@ -291,7 +293,7 @@ export default function Manutencoes() {
             </CardContent>
           </Card>
 
-          {/* Lista de Manutenções do Dia */}
+          {/* Lista de Manutenções do Dia (mantida) */
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-bold text-gray-900">

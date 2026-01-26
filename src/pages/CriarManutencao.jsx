@@ -230,31 +230,26 @@ export default function CriarManutencao() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label className="text-gray-700 mb-2 block">Início</Label>
-                  <button
-                    onClick={() => setShowInicioModal(true)}
-                    className="w-full bg-white border-2 border-gray-300 rounded-xl px-4 py-3 text-left flex items-center justify-between hover:border-gray-400 transition-colors"
-                  >
-                    <span className="text-gray-900 text-lg">
-                      {dataInicio ? formatDateDisplay(dataInicio) : 'Selecionar'}
-                    </span>
-                    <Calendar className="w-6 h-6 text-gray-400" />
-                  </button>
+                  <Input
+                    type="date"
+                    value={dataInicio}
+                    onChange={(e) => setDataInicio(e.target.value)}
+                    className="bg-white border-2 border-gray-300 rounded-xl px-4 py-3 text-left hover:border-gray-400 transition-colors"
+                  />
                 </div>
 
                 <div>
                   <Label className="text-gray-700 mb-2 block">Fim</Label>
-                  <button
-                    onClick={() => dataInicio && setShowFimModal(true)}
+                  <Input
+                    type="date"
+                    value={dataFim}
+                    min={dataInicio || undefined}
+                    onChange={(e) => setDataFim(e.target.value)}
                     disabled={!dataInicio}
-                    className={`w-full bg-white border-2 border-gray-300 rounded-xl px-4 py-3 text-left flex items-center justify-between transition-colors ${
-                      dataInicio ? 'hover:border-gray-400 cursor-pointer' : 'opacity-50 cursor-not-allowed'
+                    className={`bg-white border-2 border-gray-300 rounded-xl px-4 py-3 text-left transition-colors ${
+                      dataInicio ? 'hover:border-gray-400' : 'opacity-50 cursor-not-allowed'
                     }`}
-                  >
-                    <span className="text-gray-900 text-lg">
-                      {dataFim ? formatDateDisplay(dataFim) : 'Selecionar'}
-                    </span>
-                    <Calendar className="w-6 h-6 text-gray-400" />
-                  </button>
+                  />
                 </div>
               </div>
 
@@ -312,121 +307,48 @@ export default function CriarManutencao() {
           </Card>
         </div>
 
-        {/* Modal Tipo */}
-        <Dialog open={showTipoModal} onOpenChange={setShowTipoModal}>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <div className="flex items-center justify-between">
-                <DialogTitle className="text-[#3b5998] text-2xl">Tipo</DialogTitle>
-                <button
-                  onClick={() => setShowTipoModal(false)}
-                  className="text-gray-400 hover:text-gray-600"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-            </DialogHeader>
-            <div className="space-y-2">
-              <button
-                onClick={() => {
-                  setTipo('preventiva');
-                  setShowTipoModal(false);
-                }}
-                className="w-full p-4 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 border-b"
-              >
-                <Calendar className="w-6 h-6 text-[#3b5998]" />
-                <span className="text-lg">Preventiva</span>
-              </button>
-              <button
-                onClick={() => {
-                  setTipo('eventual');
-                  setShowTipoModal(false);
-                }}
-                className="w-full p-4 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3"
-              >
-                <Calendar className="w-6 h-6 text-[#3b5998]" />
-                <span className="text-lg">Eventual</span>
-              </button>
-            </div>
-          </DialogContent>
-        </Dialog>
+        {/* Tipo - seletor simples sem modal (para estabilidade) */}
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-gray-700 mb-2 block">Tipo</Label>
+            <select
+              value={tipo}
+              onChange={(e) => setTipo(e.target.value)}
+              className="w-full bg-gray-100 rounded-lg px-4 py-3"
+            >
+              <option value="preventiva">Preventiva</option>
+              <option value="eventual">Eventual</option>
+            </select>
+          </div>
+          <div>
+            <Label className="text-gray-700 mb-2 block">Status</Label>
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              className="w-full bg-gray-100 rounded-lg px-4 py-3"
+            >
+              <option value="pendente">Pendente</option>
+              <option value="em_andamento">Em andamento</option>
+            </select>
+          </div>
+        </div>
 
-        {/* Modal Status */}
-        <Dialog open={showStatusModal} onOpenChange={setShowStatusModal}>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <div className="flex items-center justify-between">
-                <DialogTitle className="text-[#3b5998] text-2xl">Status</DialogTitle>
-                <button
-                  onClick={() => setShowStatusModal(false)}
-                  className="text-gray-400 hover:text-gray-600"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-            </DialogHeader>
-            <div className="space-y-2">
-              <button
-                onClick={() => {
-                  setStatus('pendente');
-                  setShowStatusModal(false);
-                }}
-                className="w-full p-4 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 border-b"
-              >
-                <div className="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center">
-                  <div className="w-3 h-3 rounded-full bg-white" />
-                </div>
-                <span className="text-lg">Pendente</span>
-              </button>
-              <button
-                onClick={() => {
-                  setStatus('em_andamento');
-                  setShowStatusModal(false);
-                }}
-                className="w-full p-4 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3"
-              >
-                <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">
-                  <div className="w-3 h-3 rounded-full bg-white" />
-                </div>
-                <span className="text-lg">Em andamento</span>
-              </button>
-            </div>
-          </DialogContent>
-        </Dialog>
+        {/* Status modal removido - substituído por select acima */}
 
-        {/* Modal Recorrência */}
-        <Dialog open={showRecorrenciaModal} onOpenChange={setShowRecorrenciaModal}>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <div className="flex items-center justify-between">
-                <DialogTitle className="text-[#3b5998] text-2xl">Recorrência</DialogTitle>
-                <button
-                  onClick={() => setShowRecorrenciaModal(false)}
-                  className="text-gray-400 hover:text-gray-600"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-            </DialogHeader>
-            <div className="space-y-2">
-              {['nenhuma', 'semanal', 'mensal', 'anual'].map((rec, idx) => (
-                <button
-                  key={rec}
-                  onClick={() => {
-                    setRecorrencia(rec);
-                    setShowRecorrenciaModal(false);
-                  }}
-                  className={`w-full p-4 text-left hover:bg-gray-50 rounded-lg flex items-center gap-3 ${
-                    idx < 3 ? 'border-b' : ''
-                  }`}
-                >
-                  <Calendar className="w-6 h-6 text-[#3b5998]" />
-                  <span className="text-lg">{getRecorrenciaLabel(rec)}</span>
-                </button>
-              ))}
-            </div>
-          </DialogContent>
-        </Dialog>
+        {/* Recorrência - seletor simples */}
+        <div>
+          <Label className="text-gray-700 mb-2 block">Recorrência</Label>
+          <select
+            value={recorrencia}
+            onChange={(e) => setRecorrencia(e.target.value)}
+            className="w-full bg-gray-100 rounded-lg px-4 py-3"
+          >
+            <option value="nenhuma">Nenhuma</option>
+            <option value="semanal">Semanal</option>
+            <option value="mensal">Mensal</option>
+            <option value="anual">Anual</option>
+          </select>
+        </div>
 
         {/* Modal Data Início */}
         {showInicioModal && (
