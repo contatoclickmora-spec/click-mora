@@ -21,8 +21,7 @@ import {
     FileText,
     Activity,
     MessageCircle,
-    Wrench,
-    Shield,
+              Shield,
     MapPin,
     Siren,
     } from "lucide-react";
@@ -209,7 +208,7 @@ function LayoutContent({ children, currentPageName }) {
     'Registrar Encomenda': 'registrar_encomenda',
     'Retirar Encomenda': 'retirar_encomenda',
     'Visitantes': 'visitantes_portaria',
-    'Manutenções': 'manutencoes',
+    
     'Chamados': 'chamados_portaria',
     'Aprovar Moradores': 'aprovacao_moradores',
     'Enviar Avisos': 'enviar_avisos',
@@ -307,8 +306,7 @@ function LayoutContent({ children, currentPageName }) {
         { title: "Registrar Encomenda", url: createPageUrl("RegistrarEncomenda"), icon: QrCode },
         { title: "Retirar Encomenda", url: createPageUrl("RetirarEncomenda"), icon: PackageCheck },
         { title: "Visitantes", url: createPageUrl("VisitantesPortaria"), icon: ClipboardList },
-        { title: "Manutenções", url: createPageUrl("Manutencoes"), icon: Wrench },
-        { 
+                { 
           title: "Chamados", 
           url: createPageUrl("ChamadosPortaria"), 
           icon: MessageSquare,
