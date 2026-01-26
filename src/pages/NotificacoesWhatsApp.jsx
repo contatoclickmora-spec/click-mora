@@ -314,6 +314,12 @@ export default function NotificacoesWhatsApp() {
     }
   };
 
+  // Normalização de dados para renderização segura
+  const listaSegura = React.useMemo(() => {
+    if (!Array.isArray(moradoresComEncomendas)) return [];
+    return moradoresComEncomendas.filter(item => item?.morador?.id);
+  }, [moradoresComEncomendas]);
+
   // Proteção contra renderização prematura
   if (!contextLoaded || loading) {
     return (
@@ -328,12 +334,6 @@ export default function NotificacoesWhatsApp() {
       </AuthGuard>
     );
   }
-
-  // Normalização de dados para renderização segura
-  const listaSegura = React.useMemo(() => {
-    if (!Array.isArray(moradoresComEncomendas)) return [];
-    return moradoresComEncomendas.filter(item => item?.morador?.id);
-  }, [moradoresComEncomendas]);
 
 
 
