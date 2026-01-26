@@ -23,6 +23,8 @@ import { ptBR } from 'date-fns/locale';
 import { createPageUrl } from '@/utils';
 import { useNavigate } from 'react-router-dom';
 
+// DEPRECATED: page removed by request
+/* Page intentionally removed */
 export default function Manutencoes() {
   const navigate = useNavigate();
   const [manutencoes, setManutencoes] = useState([]);
