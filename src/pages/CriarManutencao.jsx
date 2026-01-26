@@ -377,26 +377,8 @@ export default function CriarManutencao() {
 
 }
 
-          <DatePickerModal
-            open={showInicioModal}
-            onClose={() => setShowInicioModal(false)}
-            title="Início"
-            onConfirm={setDataInicio}
-            initialDate={dataInicio}
-          />
-        )}
 
-}
 
-          <DatePickerModal
-            open={showFimModal}
-            onClose={() => setShowFimModal(false)}
-            title="Fim"
-            onConfirm={setDataFim}
-            initialDate={dataFim}
-            minDate={dataInicio}
-          />
-        )}
         {userType !== 'morador' && <MoradorFooter />}
       </div>
     </AuthGuard>
