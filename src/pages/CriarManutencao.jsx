@@ -6,24 +6,20 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import MoradorHeader from '../components/shared/MoradorHeader';
+import MoradorFooter from '../components/shared/MoradorFooter';
 import AuthGuard from '../components/utils/AuthGuard';
 import { getUserRole } from "../components/utils/authUtils";
 import { createPageUrl } from '@/utils';
 import { useNavigate } from 'react-router-dom';
-import { X, Calendar } from 'lucide-react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import DatePickerModal from '../components/shared/DatePickerModal';
+import { ArrowLeft } from 'lucide-react';
+
+
 
 export default function CriarManutencao() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [userType, setUserType] = useState('morador');
   const [condominioId, setCondominioId] = useState(null);
   
   // Form states
@@ -34,6 +30,7 @@ export default function CriarManutencao() {
   const [dataInicio, setDataInicio] = useState('');
   const [dataFim, setDataFim] = useState('');
   const [valor, setValor] = useState('');
+  const [fornecedor, setFornecedor] = useState('');
   const [visivelMoradores, setVisivelMoradores] = useState(true);
   const [recorrencia, setRecorrencia] = useState('nenhuma');
   
@@ -52,6 +49,7 @@ export default function CriarManutencao() {
     try {
       const role = await getUserRole();
       setCurrentUser(role.user);
+      setUserType(role.userType);
       if (role.morador?.condominio_id) {
         setCondominioId(role.morador.condominio_id);
       }
@@ -166,9 +164,33 @@ export default function CriarManutencao() {
   return (
     <AuthGuard>
       <div className="min-h-screen bg-[#f7f7f7]">
-        <MoradorHeader title="Criar manutenção" />
+        <div 
+          className="fixed top-0 left-0 right-0 z-40 shadow-md"
+          style={{ backgroundColor: '#3b5998' }}
+        >
+          <div style={{ height: 'env(safe-area-inset-top)', backgroundColor: '#3b5998' }} />
+          <div className="flex items-end justify-between h-24 px-4 pb-3">
+            <button
+              onClick={() => {
+                if (window.history.length > 2) {
+                  navigate(-1);
+                } else {
+                  navigate(createPageUrl('Manutencoes'), { replace: true });
+                }
+              }}
+              className="p-2 -ml-2 hover:bg-white/10 rounded-lg transition-colors"
+              aria-label="Voltar"
+            >
+              <ArrowLeft className="w-6 h-6 text-white" />
+            </button>
+            <h1 className="flex-1 text-xl font-semibold text-center text-white">
+              Nova Manutenção
+            </h1>
+            <div className="w-10" />
+          </div>
+        </div>
         
-        <div className="pt-16 pb-24 px-4 max-w-7xl mx-auto">
+        <div className="pt-28 pb-24 px-4 max-w-7xl mx-auto">
           <Card className="bg-white">
             <CardContent className="p-6 space-y-4">
               {/* Título */}
@@ -197,32 +219,25 @@ export default function CriarManutencao() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label className="text-gray-700 mb-2 block">Tipo</Label>
-                  <button
-                    onClick={() => setShowTipoModal(true)}
-                    className="w-full bg-gray-100 rounded-lg px-4 py-3 text-left flex items-center justify-between"
+                  <select
+                    value={tipo}
+                    onChange={(e) => setTipo(e.target.value)}
+                    className="w-full bg-gray-100 rounded-lg px-4 py-3"
                   >
-                    <span className="text-gray-700">{getTipoLabel(tipo)}</span>
-                    <div className="flex gap-1">
-                      <div className="w-1 h-1 rounded-full bg-gray-400" />
-                      <div className="w-1 h-1 rounded-full bg-gray-400" />
-                      <div className="w-1 h-1 rounded-full bg-gray-400" />
-                    </div>
-                  </button>
+                    <option value="preventiva">Preventiva</option>
+                    <option value="eventual">Eventual</option>
+                  </select>
                 </div>
-
                 <div>
                   <Label className="text-gray-700 mb-2 block">Status</Label>
-                  <button
-                    onClick={() => setShowStatusModal(true)}
-                    className="w-full bg-gray-100 rounded-lg px-4 py-3 text-left flex items-center justify-between"
+                  <select
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                    className="w-full bg-gray-100 rounded-lg px-4 py-3"
                   >
-                    <span className="text-gray-700">{getStatusLabel(status)}</span>
-                    <div className="flex gap-1">
-                      <div className="w-1 h-1 rounded-full bg-gray-400" />
-                      <div className="w-1 h-1 rounded-full bg-gray-400" />
-                      <div className="w-1 h-1 rounded-full bg-gray-400" />
-                    </div>
-                  </button>
+                    <option value="pendente">Pendente</option>
+                    <option value="em_andamento">Em andamento</option>
+                  </select>
                 </div>
               </div>
 
@@ -253,6 +268,17 @@ export default function CriarManutencao() {
                 </div>
               </div>
 
+              {/* Fornecedor */}
+              <div>
+                <Label className="text-gray-700 mb-2 block">Fornecedor</Label>
+                <Input
+                  placeholder="Nome do fornecedor"
+                  value={fornecedor}
+                  onChange={(e) => setFornecedor(e.target.value)}
+                  className="bg-gray-100 border-0"
+                />
+              </div>
+
               {/* Valor */}
               <div>
                 <Label className="text-gray-700 mb-2 block">Valor</Label>
@@ -280,17 +306,16 @@ export default function CriarManutencao() {
               {/* Recorrência */}
               <div>
                 <Label className="text-gray-700 mb-2 block">Recorrência</Label>
-                <button
-                  onClick={() => setShowRecorrenciaModal(true)}
-                  className="w-full bg-gray-100 rounded-lg px-4 py-3 text-left flex items-center justify-between"
+                <select
+                  value={recorrencia}
+                  onChange={(e) => setRecorrencia(e.target.value)}
+                  className="w-full bg-gray-100 rounded-lg px-4 py-3"
                 >
-                  <span className="text-gray-700">{getRecorrenciaLabel(recorrencia)}</span>
-                  <div className="flex gap-1">
-                    <div className="w-1 h-1 rounded-full bg-gray-400" />
-                    <div className="w-1 h-1 rounded-full bg-gray-400" />
-                    <div className="w-1 h-1 rounded-full bg-gray-400" />
-                  </div>
-                </button>
+                  <option value="nenhuma">Nenhuma</option>
+                  <option value="semanal">Semanal</option>
+                  <option value="mensal">Mensal</option>
+                  <option value="anual">Anual</option>
+                </select>
               </div>
 
               {/* Botão Salvar */}
@@ -333,7 +358,7 @@ export default function CriarManutencao() {
           </div>
         </div>
 
-        {/* Status modal removido - substituído por select acima */}
+
 
         {/* Recorrência - seletor simples */}
         <div>
@@ -350,8 +375,8 @@ export default function CriarManutencao() {
           </select>
         </div>
 
-        {/* Modal Data Início */}
-        {showInicioModal && (
+}
+
           <DatePickerModal
             open={showInicioModal}
             onClose={() => setShowInicioModal(false)}
@@ -361,8 +386,8 @@ export default function CriarManutencao() {
           />
         )}
 
-        {/* Modal Data Fim */}
-        {showFimModal && (
+}
+
           <DatePickerModal
             open={showFimModal}
             onClose={() => setShowFimModal(false)}
@@ -372,6 +397,7 @@ export default function CriarManutencao() {
             minDate={dataInicio}
           />
         )}
+        {userType !== 'morador' && <MoradorFooter />}
       </div>
     </AuthGuard>
   );
