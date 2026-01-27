@@ -166,10 +166,7 @@ export default function WhatsAppPage() {
                           {logIds.length > 0 && (
                             <div className="mt-1 text-xs">
                               {(() => {
-                                const log = Object.values(statuses).find(s => s && s.resident_id === it.resident_id);
-                                const entry = Object.entries(statuses).find(([id,s]) => s && logIds.includes(id));
-                                const val = entry ? entry[1] : null;
-                                const st = val?.status;
+                                const st = statusByResident[it.resident_id];
                                 if (!st) return <span className="text-gray-400">Pendente</span>;
                                 if (st === 'sent') return <span className="text-green-700">Enviado</span>;
                                 if (st === 'error') return <span className="text-red-600">Erro</span>;
