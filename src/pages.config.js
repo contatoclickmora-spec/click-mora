@@ -39,8 +39,8 @@ import VisitantesPortaria from './pages/VisitantesPortaria';
 import VistoriaImoveis from './pages/VistoriaImoveis';
 import inicio from './pages/inicio';
 import pagina from './pages/pagina';
-import __Layout from './Layout.jsx';
 import WhatsApp from './pages/WhatsApp';
+import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
@@ -79,13 +79,13 @@ export const PAGES = {
     "RelatoriosFinanceiros": RelatoriosFinanceiros,
     "RetirarEncomenda": RetirarEncomenda,
     "SOS": SOS,
-    "WhatsApp": WhatsApp,
     "Templates": Templates,
     "TipoEmergencia": TipoEmergencia,
     "VisitantesPortaria": VisitantesPortaria,
     "VistoriaImoveis": VistoriaImoveis,
     "inicio": inicio,
     "pagina": pagina,
+    "WhatsApp": WhatsApp,
 }
 
 export const pagesConfig = {

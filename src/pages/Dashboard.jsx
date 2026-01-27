@@ -504,7 +504,7 @@ export default function Dashboard() {
     { icon: Package, titulo: 'Encomendas', path: createPageUrl('GerenciamentoEncomendas'), key: 'encomendas' },
     { icon: MessageSquare, titulo: 'Chamados', path: createPageUrl('ChamadosPortaria'), key: 'chamados' },
     { icon: ClipboardList, titulo: 'Visitantes', path: createPageUrl('VisitantesPortaria'), key: 'visitantes' },
-    
+    { icon: MessageCircle, titulo: 'WhatsApp', path: createPageUrl('WhatsApp'), key: 'notificacoes_whatsapp' },
     { icon: ShoppingBag, titulo: 'Marketplace', path: createPageUrl('Marketplace'), key: 'marketplace' },
     { icon: Users, titulo: 'Moradores', path: createPageUrl('Moradores'), key: 'moradores' },
     { icon: ThumbsUp, titulo: 'Enquetes', path: createPageUrl('Enquetes'), key: 'enquetes' },
