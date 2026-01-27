@@ -63,7 +63,8 @@ Deno.serve(async (req) => {
 
       for (const log of list) {
         // Atualizar para sending
-        await base44.asServiceRole.entities.WhatsAppDispatchLog.update(log.id, { status: 'sending', attempts: (log.attempts || 0) + 1, updated_at: nowIso() }).catch(()=>{});
+        const newAttempts = (log.attempts || 0) + 1;
+        await base44.asServiceRole.entities.WhatsAppDispatchLog.update(log.id, { status: 'sending', attempts: newAttempts, updated_at: nowIso() }).catch(()=>{});
 
         // Validar dados
         const pkgCount = Number(log.package_count || 0);
@@ -79,7 +80,7 @@ Deno.serve(async (req) => {
           result = await fetchZapi(cfg, log.phone, message);
         } catch (err) {
           await base44.asServiceRole.entities.WhatsAppDispatchLog.update(log.id, {
-            status: (log.attempts || 0) + 1 >= 3 ? 'error' : 'pending',
+            status: newAttempts >= 3 ? 'error' : 'pending',
             error_message: shortText(err?.message || 'Falha ao chamar Z-API'),
             zapi_response: '',
             updated_at: nowIso()
@@ -90,7 +91,7 @@ Deno.serve(async (req) => {
         if (result.ok) {
           await base44.asServiceRole.entities.WhatsAppDispatchLog.update(log.id, { status: 'sent', zapi_response: shortText(result.body, 1500), updated_at: nowIso() }).catch(()=>{});
         } else {
-          const nextStatus = (log.attempts || 0) + 1 >= 3 ? 'error' : 'pending';
+          const nextStatus = newAttempts >= 3 ? 'error' : 'pending';
           await base44.asServiceRole.entities.WhatsAppDispatchLog.update(log.id, { status: nextStatus, error_message: `HTTP ${result.status}`, zapi_response: shortText(result.body, 1500), updated_at: nowIso() }).catch(()=>{});
         }
       }

@@ -18,6 +18,7 @@ export default function WhatsAppPage() {
   const [selected, setSelected] = useState(new Set());
   const [sending, setSending] = useState(false);
   const [statuses, setStatuses] = useState({}); // id -> {status}
+  const [statusByResident, setStatusByResident] = useState({}); // resident_id -> status
   const [batch, setBatch] = useState(null);
   const [logIds, setLogIds] = useState([]);
 
@@ -65,7 +66,8 @@ export default function WhatsAppPage() {
       try {
         const { data } = await base44.functions.invoke('getWhatsAppDispatchStatus', { log_ids: ids });
         const arr = Array.isArray(data?.items) ? data.items : [];
-        setStatuses(prev => ({ ...prev, ...Object.fromEntries(arr.map(i => [i.id, { status: i.status, attempts: i.attempts, error: i.error_message }])) }));
+        setStatuses(prev => ({ ...prev, ...Object.fromEntries(arr.map(i => [i.id, { status: i.status, attempts: i.attempts, error: i.error_message, resident_id: i.resident_id }])) }));
+        setStatusByResident(prev => ({ ...prev, ...Object.fromEntries(arr.map(i => [i.resident_id, i.status])) }));
         const done = arr.every(i => i.status === 'sent' || i.status === 'error');
         if (done) { clearInterval(interval); setSending(false); setSuccess('Envio concluído'); setTimeout(()=>setSuccess(''), 4000); }
       } catch {}
