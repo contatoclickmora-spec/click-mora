@@ -196,8 +196,8 @@ async function enviarViaWhatsAppCloudAPI(config, telefone, mensagem) {
  * @returns {Promise<{success: boolean, error?: string}>}
  */
 export async function sendWhatsAppNotification(condominioId, telefone, mensagem, nomeDestinatario = "Destinatário") {
-  // Safe mode: stubbed
   return { success: false, error: "WhatsApp temporarily disabled (safe mode)" };
+};
 };
 }
 
