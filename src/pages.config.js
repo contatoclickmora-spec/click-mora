@@ -6,14 +6,10 @@ import AvisosMorador from './pages/AvisosMorador';
 import ChamadosPortaria from './pages/ChamadosPortaria';
 import ComoUsar from './pages/ComoUsar';
 import ConfiguracoesSistema from './pages/ConfiguracoesSistema';
-import ConfiguracoesWhatsApp from './pages/ConfiguracoesWhatsApp';
-import ConfiguracoesWhatsAppAdmin from './pages/ConfiguracoesWhatsAppAdmin';
 import Dashboard from './pages/Dashboard';
 import DashboardMorador from './pages/DashboardMorador';
 import DetalhesEnquete from './pages/DetalhesEnquete';
 import DetalhesImovelVistoria from './pages/DetalhesImovelVistoria';
-import DocumentoDetalhes from './pages/DocumentoDetalhes';
-import Documentos from './pages/Documentos';
 import EncomendasMorador from './pages/EncomendasMorador';
 import Enquetes from './pages/Enquetes';
 import Entregadores from './pages/Entregadores';
@@ -27,10 +23,8 @@ import LogsAuditoria from './pages/LogsAuditoria';
 import Marketplace from './pages/Marketplace';
 import MonitoramentoSistema from './pages/MonitoramentoSistema';
 import Moradores from './pages/Moradores';
-import NotificacoesWhatsApp from './pages/NotificacoesWhatsApp';
 import NovaEnquete from './pages/NovaEnquete';
 import NovaVistoria from './pages/NovaVistoria';
-import NovoDocumento from './pages/NovoDocumento';
 import Permissoes from './pages/Permissoes';
 import PoliticaPrivacidade from './pages/PoliticaPrivacidade';
 import PotenciaisCondominios from './pages/PotenciaisCondominios';
@@ -57,14 +51,10 @@ export const PAGES = {
     "ChamadosPortaria": ChamadosPortaria,
     "ComoUsar": ComoUsar,
     "ConfiguracoesSistema": ConfiguracoesSistema,
-    "ConfiguracoesWhatsApp": ConfiguracoesWhatsApp,
-    "ConfiguracoesWhatsAppAdmin": ConfiguracoesWhatsAppAdmin,
     "Dashboard": Dashboard,
     "DashboardMorador": DashboardMorador,
     "DetalhesEnquete": DetalhesEnquete,
     "DetalhesImovelVistoria": DetalhesImovelVistoria,
-    "DocumentoDetalhes": DocumentoDetalhes,
-    "Documentos": Documentos,
     "EncomendasMorador": EncomendasMorador,
     "Enquetes": Enquetes,
     "Entregadores": Entregadores,
@@ -78,10 +68,8 @@ export const PAGES = {
     "Marketplace": Marketplace,
     "MonitoramentoSistema": MonitoramentoSistema,
     "Moradores": Moradores,
-    "NotificacoesWhatsApp": NotificacoesWhatsApp,
     "NovaEnquete": NovaEnquete,
     "NovaVistoria": NovaVistoria,
-    "NovoDocumento": NovoDocumento,
     "Permissoes": Permissoes,
     "PoliticaPrivacidade": PoliticaPrivacidade,
     "PotenciaisCondominios": PotenciaisCondominios,

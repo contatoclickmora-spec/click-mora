@@ -252,12 +252,7 @@ function LayoutContent({ children, currentPageName }) {
           icon: Building2,
           description: "Gerenciar condomínios"
         },
-        {
-          title: "WhatsApp",
-          url: createPageUrl("ConfiguracoesWhatsAppAdmin"),
-          icon: MessageCircle,
-          description: "Configurações WhatsApp"
-        },
+
         {
           title: "Financeiro",
           url: createPageUrl("RelatoriosFinanceiros"),
@@ -312,11 +307,7 @@ function LayoutContent({ children, currentPageName }) {
           icon: MessageSquare,
           badge: chamadosPendentes > 0 ? chamadosPendentes : null
         },
-        { 
-          title: "WhatsApp", 
-          url: createPageUrl("NotificacoesWhatsApp"), 
-          icon: MessageCircle 
-        },
+
         { 
           title: "SOS", 
           url: createPageUrl("SOS"), 

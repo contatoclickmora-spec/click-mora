@@ -199,13 +199,13 @@ export default function Dashboard() {
     'retirar': 'retirar_encomenda',
     'chamados': 'chamados_portaria',
     'visitantes': 'visitantes_portaria',
-    'documentos': 'documentos',
+    
     'marketplace': 'marketplace',
     'entregadores': 'entregadores',
     'moradores': 'moradores',
     'enquetes': 'enquetes',
     'avisos': 'enviar_avisos',
-    'notificacoes_whatsapp': 'notificacoes_whatsapp',
+    
     'permissoes': 'permissoes'
   };
 
@@ -470,13 +470,13 @@ export default function Dashboard() {
     'retirar': 'retirar_encomenda',
     'chamados': 'chamados_portaria',
     'visitantes': 'visitantes_portaria',
-    'documentos': 'documentos',
+    
     'marketplace': 'marketplace',
     'entregadores': 'entregadores',
     'moradores': 'moradores',
     'enquetes': 'enquetes',
     'avisos': 'enviar_avisos',
-    'notificacoes_whatsapp': 'notificacoes_whatsapp',
+    
     'permissoes': 'permissoes'
   };
 
@@ -504,7 +504,7 @@ export default function Dashboard() {
     { icon: Package, titulo: 'Encomendas', path: createPageUrl('GerenciamentoEncomendas'), key: 'encomendas' },
     { icon: MessageSquare, titulo: 'Chamados', path: createPageUrl('ChamadosPortaria'), key: 'chamados' },
     { icon: ClipboardList, titulo: 'Visitantes', path: createPageUrl('VisitantesPortaria'), key: 'visitantes' },
-    { icon: FileText, titulo: 'Documentos', path: createPageUrl('Documentos'), key: 'documentos' },
+    
     { icon: ShoppingBag, titulo: 'Marketplace', path: createPageUrl('Marketplace'), key: 'marketplace' },
     { icon: Users, titulo: 'Moradores', path: createPageUrl('Moradores'), key: 'moradores' },
     { icon: ThumbsUp, titulo: 'Enquetes', path: createPageUrl('Enquetes'), key: 'enquetes' },
@@ -512,12 +512,7 @@ export default function Dashboard() {
   ];
 
   if (userType === 'administrador') {
-    menuCompleto.splice(3, 0, {
-      icon: MessageCircle,
-      titulo: 'WhatsApp',
-      path: createPageUrl('NotificacoesWhatsApp'),
-      key: 'notificacoes_whatsapp'
-    });
+
     menuCompleto.push({
       icon: Megaphone,
       titulo: 'Avisos',
