@@ -1,5 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { base44 } from "@/api/base44Client";
+import { listWhatsAppPending } from "@/functions/listWhatsAppPending";
+import { startWhatsAppDispatch } from "@/functions/startWhatsAppDispatch";
+import { getWhatsAppDispatchStatus } from "@/functions/getWhatsAppDispatchStatus";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -42,7 +45,7 @@ export default function WhatsAppPage() {
   }, []);
 
   const loadPending = async () => {
-    const { data } = await base44.functions.invoke('listWhatsAppPending');
+    const { data } = await listWhatsAppPending();
     const list = Array.isArray(data?.items) ? data.items : [];
     setItems(list);
     setSelected(new Set(list.map(i => i.resident_id)));
@@ -64,7 +67,7 @@ export default function WhatsAppPage() {
   const startPolling = (ids) => {
     const interval = setInterval(async () => {
       try {
-        const { data } = await base44.functions.invoke('getWhatsAppDispatchStatus', { log_ids: ids });
+        const { data } = await getWhatsAppDispatchStatus({ log_ids: ids });
         const arr = Array.isArray(data?.items) ? data.items : [];
         setStatuses(prev => ({ ...prev, ...Object.fromEntries(arr.map(i => [i.id, { status: i.status, attempts: i.attempts, error: i.error_message, resident_id: i.resident_id }])) }));
         setStatusByResident(prev => ({ ...prev, ...Object.fromEntries(arr.map(i => [i.resident_id, i.status])) }));
@@ -82,7 +85,7 @@ export default function WhatsAppPage() {
     try {
       setSending(true); setError(''); setSuccess(''); setStatuses({});
       const resident_ids = Array.from(selected);
-      const { data } = await base44.functions.invoke('startWhatsAppDispatch', { resident_ids });
+      const { data } = await startWhatsAppDispatch({ resident_ids });
       const ids = Array.isArray(data?.log_ids) ? data.log_ids : [];
       setBatch(data?.batch_id || null);
       setLogIds(ids);
