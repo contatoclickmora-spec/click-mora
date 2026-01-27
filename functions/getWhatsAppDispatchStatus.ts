@@ -6,6 +6,13 @@ Deno.serve(async (req) => {
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
 
+    // Role check: admin master or síndico/porteiro
+    const moradores = await base44.entities.Morador.list();
+    const morador = moradores.find(m => (m.email || '').toLowerCase() === (user.email || '').toLowerCase());
+    const tipo = morador?.tipo_usuario || null;
+    const allowed = user.role === 'admin' || ['porteiro', 'administrador'].includes(tipo);
+    if (!allowed) return Response.json({ error: 'Forbidden' }, { status: 403 });
+
     const body = await req.json().catch(() => ({}));
     const ids = Array.isArray(body.log_ids) ? body.log_ids.filter(Boolean) : [];
     if (ids.length === 0) return Response.json({ items: [] });
