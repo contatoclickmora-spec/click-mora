@@ -159,7 +159,7 @@ function LayoutContent({ children, currentPageName }) {
     'Chamados': 'chamados_portaria',
     'Aprovar Moradores': 'aprovacao_moradores',
     'Enviar Avisos': 'enviar_avisos',
-    'WhatsApp': 'notificacoes_whatsapp',
+    
     'Relatórios': 'relatorios',
     'Moradores': 'moradores',
     'Funcionários': 'funcionarios',
