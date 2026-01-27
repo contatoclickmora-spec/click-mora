@@ -199,6 +199,7 @@ export async function sendWhatsAppNotification(condominioId, telefone, mensagem,
   return { success: false, error: "WhatsApp temporarily disabled (safe mode)" };
 };
 };
+};
 }
 
 /**
