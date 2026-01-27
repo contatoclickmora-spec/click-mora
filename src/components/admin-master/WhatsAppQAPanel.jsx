@@ -20,6 +20,8 @@ export default function WhatsAppQAPanel({ condominioId, config }) {
   const [error, setError] = useState(null);
 
   const runQA = async () => {
+    setError('Modo seguro: testes de WhatsApp desativados temporariamente.');
+    return;
     if (!telefone.trim()) {
       setError('Digite um telefone para teste');
       return;
