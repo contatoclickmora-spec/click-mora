@@ -471,7 +471,6 @@ export default function Dashboard() {
     'retirar': 'retirar_encomenda',
     'chamados': 'chamados_portaria',
     'visitantes': 'visitantes_portaria',
-    'manutencoes': 'manutencoes',
     'documentos': 'documentos',
     'marketplace': 'marketplace',
     'entregadores': 'entregadores',
