@@ -5,8 +5,17 @@ const ChamadosContext = createContext();
 
 export function useChamados() {
   const context = useContext(ChamadosContext);
+  // Safe mode: fallback to no-op context when provider is absent
   if (!context) {
-    throw new Error('useChamados must be used within a ChamadosProvider');
+    return {
+      chamadosPendentes: 0,
+      loading: false,
+      notificarNovoChamado: () => {},
+      atualizarChamados: () => {},
+      forcarAtualizacao: 0,
+      userType: null,
+      condominioId: null,
+    };
   }
   return context;
 }
