@@ -39,6 +39,7 @@ import VisitantesPortaria from './pages/VisitantesPortaria';
 import VistoriaImoveis from './pages/VistoriaImoveis';
 import inicio from './pages/inicio';
 import pagina from './pages/pagina';
+import WhatsApp from './pages/WhatsApp';
 import __Layout from './Layout.jsx';
 
 
@@ -84,6 +85,7 @@ export const PAGES = {
     "VistoriaImoveis": VistoriaImoveis,
     "inicio": inicio,
     "pagina": pagina,
+    "WhatsApp": WhatsApp,
 }
 
 export const pagesConfig = {
