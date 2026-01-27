@@ -313,6 +313,11 @@ function LayoutContent({ children, currentPageName }) {
           url: createPageUrl("SOS"), 
           icon: Shield,
           iconColor: "text-black"
+        },
+        {
+          title: "WhatsApp",
+          url: createPageUrl("WhatsApp"),
+          icon: MessageCircle
         }
       ];
 
