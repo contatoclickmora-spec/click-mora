@@ -6,7 +6,6 @@ import AvisosMorador from './pages/AvisosMorador';
 import ChamadosPortaria from './pages/ChamadosPortaria';
 import ComoUsar from './pages/ComoUsar';
 import ConfiguracoesSistema from './pages/ConfiguracoesSistema';
-import ConfiguracoesWhatsAppAdmin from './pages/ConfiguracoesWhatsAppAdmin';
 import Dashboard from './pages/Dashboard';
 import DashboardMorador from './pages/DashboardMorador';
 import DetalhesEnquete from './pages/DetalhesEnquete';
@@ -38,7 +37,6 @@ import Templates from './pages/Templates';
 import TipoEmergencia from './pages/TipoEmergencia';
 import VisitantesPortaria from './pages/VisitantesPortaria';
 import VistoriaImoveis from './pages/VistoriaImoveis';
-import WhatsApp from './pages/WhatsApp';
 import inicio from './pages/inicio';
 import pagina from './pages/pagina';
 import __Layout from './Layout.jsx';
@@ -53,7 +51,6 @@ export const PAGES = {
     "ChamadosPortaria": ChamadosPortaria,
     "ComoUsar": ComoUsar,
     "ConfiguracoesSistema": ConfiguracoesSistema,
-    "ConfiguracoesWhatsAppAdmin": ConfiguracoesWhatsAppAdmin,
     "Dashboard": Dashboard,
     "DashboardMorador": DashboardMorador,
     "DetalhesEnquete": DetalhesEnquete,
@@ -85,7 +82,6 @@ export const PAGES = {
     "TipoEmergencia": TipoEmergencia,
     "VisitantesPortaria": VisitantesPortaria,
     "VistoriaImoveis": VistoriaImoveis,
-    "WhatsApp": WhatsApp,
     "inicio": inicio,
     "pagina": pagina,
 }
