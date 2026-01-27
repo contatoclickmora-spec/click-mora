@@ -272,6 +272,12 @@ function LayoutContent({ children, currentPageName }) {
           description: "Configurações globais"
         },
         {
+          title: "Configurações WhatsApp",
+          url: createPageUrl("ConfiguracoesWhatsAppAdmin"),
+          icon: MessageCircle,
+          description: "Z-API e envios"
+        },
+        {
           title: "Monitoramento",
           url: createPageUrl("MonitoramentoSistema"),
           icon: Activity,

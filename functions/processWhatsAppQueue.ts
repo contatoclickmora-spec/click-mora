@@ -54,14 +54,28 @@ Deno.serve(async (req) => {
     }
 
     for (const [condoId, list] of byCondo.entries()) {
-      // Buscar config ativa do condomínio
+      // Buscar config ativa do condomínio com fallback para GLOBAL
       let cfg = null;
       try {
-        const configs = condoId ? await base44.asServiceRole.entities.WhatsAppConfig.filter({ condominio_id: condoId }) : await base44.asServiceRole.entities.WhatsAppConfig.list();
-        cfg = (configs || []).find(c => c?.ativo);
+        if (condoId) {
+          const condoConfigs = await base44.asServiceRole.entities.WhatsAppConfig.filter({ condominio_id: condoId });
+          cfg = (condoConfigs || []).find(c => c?.ativo);
+          if (!cfg) {
+            const globalConfigs = await base44.asServiceRole.entities.WhatsAppConfig.filter({ condominio_id: 'GLOBAL' });
+            cfg = (globalConfigs || []).find(c => c?.ativo);
+          }
+        } else {
+          const globalConfigs = await base44.asServiceRole.entities.WhatsAppConfig.filter({ condominio_id: 'GLOBAL' });
+          cfg = (globalConfigs || []).find(c => c?.ativo);
+        }
       } catch {}
 
       for (const log of list) {
+        // Validar config antes de enviar
+        if (!cfg || !cfg.zapi_base_url) {
+          await base44.asServiceRole.entities.WhatsAppDispatchLog.update(log.id, { status: 'error', error_message: 'Configuração Z-API não encontrada/ativa', updated_at: nowIso() }).catch(()=>{});
+          continue;
+        }
         // Validar dados antes
         const pkgCount = Number(log.package_count || 0);
         if (!pkgCount || !log.phone) {

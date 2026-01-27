@@ -37,9 +37,10 @@ import Templates from './pages/Templates';
 import TipoEmergencia from './pages/TipoEmergencia';
 import VisitantesPortaria from './pages/VisitantesPortaria';
 import VistoriaImoveis from './pages/VistoriaImoveis';
+import WhatsApp from './pages/WhatsApp';
 import inicio from './pages/inicio';
 import pagina from './pages/pagina';
-import WhatsApp from './pages/WhatsApp';
+import ConfiguracoesWhatsAppAdmin from './pages/ConfiguracoesWhatsAppAdmin';
 import __Layout from './Layout.jsx';
 
 
@@ -83,9 +84,10 @@ export const PAGES = {
     "TipoEmergencia": TipoEmergencia,
     "VisitantesPortaria": VisitantesPortaria,
     "VistoriaImoveis": VistoriaImoveis,
+    "WhatsApp": WhatsApp,
     "inicio": inicio,
     "pagina": pagina,
-    "WhatsApp": WhatsApp,
+    "ConfiguracoesWhatsAppAdmin": ConfiguracoesWhatsAppAdmin,
 }
 
 export const pagesConfig = {
