@@ -20,7 +20,6 @@ import {
     DollarSign,
     FileText,
     Activity,
-    MessageCircle,
               Shield,
     MapPin,
     Siren,
@@ -51,13 +50,11 @@ const pageTitles = {
   ConfiguracoesSistema: "Configurações do Sistema",
   MonitoramentoSistema: "Monitoramento do Sistema",
   GestaoCondominios: "Gestão de Condomínios",
-  ConfiguracoesWhatsAppAdmin: "Configurações WhatsApp",
   RegistrarEncomenda: "Registrar Nova Encomenda",
   RetirarEncomenda: "Retirar Encomenda",
   VisitantesPortaria: "Controle de Visitantes",
   ChamadosPortaria: "Gestão de Chamados",
   EnviarAvisos: "Enviar Avisos",
-  ConfiguracoesWhatsApp: "Configurações de WhatsApp",
   Relatorios: "Relatórios e Métricas",
   Moradores: "Gestão de Pessoas",
   AprovacaoMoradores: "Aprovar Moradores",
@@ -222,12 +219,6 @@ function LayoutContent({ children, currentPageName }) {
           description: "Configurações globais"
         },
         {
-          title: "Configurações WhatsApp",
-          url: createPageUrl("ConfiguracoesWhatsAppAdmin"),
-          icon: MessageCircle,
-          description: "Z-API e envios"
-        },
-        {
           title: "Monitoramento",
           url: createPageUrl("MonitoramentoSistema"),
           icon: Activity,
@@ -270,11 +261,6 @@ function LayoutContent({ children, currentPageName }) {
           icon: Shield,
           iconColor: "text-black"
         },
-        {
-          title: "WhatsApp",
-          url: createPageUrl("WhatsApp"),
-          icon: MessageCircle
-        }
       ];
 
       // Filtrar baseado nas permissões do perfil

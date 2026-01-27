@@ -3,8 +3,6 @@ import { User } from "@/entities/User";
 import { Morador } from "@/entities/Morador";
 import { Residencia } from "@/entities/Residencia";
 import { Aviso } from "@/entities/Aviso";
-import { MensagemWhatsApp } from "@/entities/MensagemWhatsApp";
-import { WhatsAppConfig } from "@/entities/WhatsAppConfig";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,7 +19,6 @@ import {
   X,
   Check,
   ChevronDown,
-  MessageCircle,
   QrCode,
   MessageSquare,
   Package
@@ -55,9 +52,7 @@ export default function EnviarAvisos() {
   const [uploading, setUploading] = useState(false);
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
-  const [whatsappConfig, setWhatsappConfig] = useState(null);
   const [userCondominioId, setUserCondominioId] = useState(null);
-  const [enviarViaWhatsApp, setEnviarViaWhatsApp] = useState(false);
   const [showDestinatarioModal, setShowDestinatarioModal] = useState(false);
   const [searchMorador, setSearchMorador] = useState('');
 
@@ -96,20 +91,14 @@ export default function EnviarAvisos() {
       setUserCondominioId(condominioId);
 
       // PROTEÇÃO: Carregar APENAS dados do condomínio do usuário
-      const [moradoresData, residenciasData, configs] = await Promise.all([
+      const [moradoresData, residenciasData] = await Promise.all([
         Morador.filter({ condominio_id: condominioId, status: "ativo" }),
-        Residencia.filter({ condominio_id: condominioId }),
-        WhatsAppConfig.filter({ condominio_id: condominioId })
+        Residencia.filter({ condominio_id: condominioId })
       ]);
 
       // VALIDAÇÃO: Garantir isolamento absoluto
       const moradoresValidados = moradoresData.filter(m => m.condominio_id === condominioId);
       const residenciasValidadas = residenciasData.filter(r => r.condominio_id === condominioId);
-      const configsValidadas = configs.filter(c => c.condominio_id === condominioId);
-
-      if (configsValidadas.length > 0 && configsValidadas[0].ativo) {
-        setWhatsappConfig(configsValidadas[0]);
-      }
 
       setMoradores(moradoresValidados);
       setResidencias(residenciasValidadas);
@@ -282,11 +271,6 @@ export default function EnviarAvisos() {
       return;
     }
 
-    if (enviarViaWhatsApp && !whatsappConfig) {
-      setError("WhatsApp não configurado");
-      setTimeout(() => setError(''), 3000);
-      return;
-    }
 
     // VALIDAÇÃO: Condomínio identificado
     if (!userCondominioId) {
@@ -319,31 +303,8 @@ export default function EnviarAvisos() {
 
       await Aviso.create(avisoData);
 
-      if (enviarViaWhatsApp && whatsappConfig) {
-        // SANITIZAÇÃO: Limitar número de mensagens simultâneas
-        const destinatariosLimitados = destinatarios.slice(0, 100);
-        
-        const mensagensWhatsApp = destinatariosLimitados.map(morador => ({
-          condominio_id: userCondominioId,
-          destinatario_nome: String(morador.nome || 'Sem nome').trim().slice(0, 200),
-          destinatario_telefone: String(morador.telefone || '').replace(/[^\d]/g, '').slice(0, 11),
-          destinatario_id: morador.id,
-          mensagem: `${tituloSanitizado}\n\n${mensagemSanitizada}\n\nEnviado por: ${whatsappConfig.nome_exibicao || 'Administração'}`,
-          tipo_mensagem: 'comunicado',
-          status_envio: 'enviado',
-          data_envio: agora.toISOString(),
-          enviado_por: currentUser.email,
-          template_usado: 'aviso_geral'
-        }));
 
-        await Promise.all(mensagensWhatsApp.map(msg => MensagemWhatsApp.create(msg)));
-        
-        if (destinatarios.length > 100) {
-          console.warn(`[PERFORMANCE] Mensagens limitadas a 100 de ${destinatarios.length} destinatários`);
-        }
-      }
-
-      setSuccess(`Aviso enviado para ${destinatarios.length} morador(es)!${enviarViaWhatsApp ? ' Via WhatsApp também!' : ''}`);
+      setSuccess(`Aviso enviado para ${destinatarios.length} morador(es)!`);
       
       // Resetar formulário
       setFormData({
@@ -356,7 +317,6 @@ export default function EnviarAvisos() {
         blocos_selecionados: []
       });
       setImagemUrl('');
-      setEnviarViaWhatsApp(false);
 
       setTimeout(() => setSuccess(''), 5000);
 
@@ -677,21 +637,6 @@ export default function EnviarAvisos() {
         />
 
         {/* Checkbox WhatsApp */}
-        {whatsappConfig && (
-          <div className="flex items-center gap-3 p-4 bg-white rounded-lg border border-gray-200">
-            <input
-              type="checkbox"
-              id="whatsapp"
-              checked={enviarViaWhatsApp}
-              onChange={(e) => setEnviarViaWhatsApp(e.target.checked)}
-              className="w-5 h-5 text-[#3b5998] rounded"
-            />
-            <label htmlFor="whatsapp" className="flex items-center gap-2 cursor-pointer flex-1">
-              <MessageCircle className="w-5 h-5 text-[#25D366]" />
-              <span className="text-sm text-gray-700">Enviar também via WhatsApp</span>
-            </label>
-          </div>
-        )}
 
         {/* Contador de Destinatários */}
         {destinatarios.length > 0 && (
