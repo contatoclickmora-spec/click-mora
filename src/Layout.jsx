@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
+// Safe mode flag
+default export const __SAFE_MODE__ = true;
 import { createPageUrl } from "@/utils";
 import { getUserRole, clearAuthCache } from "@/components/utils/authUtils";
 import {
