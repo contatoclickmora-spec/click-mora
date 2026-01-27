@@ -3,24 +3,23 @@ import { getUserRole, getUserRoleSync, clearAuthCache } from "../components/util
 import { base44 } from "@/api/base44Client";
 import AuthGuard from "../components/utils/AuthGuard";
 import {
-  Package,
-  MessageSquare,
-  Users,
-  ChevronDown,
-  ChevronUp,
-  Megaphone,
-  UserCheck,
-  ClipboardList,
-  QrCode,
-  PackageCheck,
-  ThumbsUp,
-  Wrench,
-  FileText,
-  ShoppingBag,
-  Shield,
-  MessageCircle,
-  Siren
-} from "lucide-react";
+   Package,
+   MessageSquare,
+   Users,
+   ChevronDown,
+   ChevronUp,
+   Megaphone,
+   UserCheck,
+   ClipboardList,
+   QrCode,
+   PackageCheck,
+   ThumbsUp,
+   FileText,
+   ShoppingBag,
+   Shield,
+   MessageCircle,
+   Siren
+ } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -221,7 +220,7 @@ export default function Dashboard() {
   };
 
   // Filtrar todasFuncionalidades baseado nas permissões
-  const funcionalidadesVisiveis = todasFuncionalidades.filter(f => f.key !== 'manutencoes').filter(f => filtrarPorPermissao(f.key));
+  const funcionalidadesVisiveis = todasFuncionalidades.filter(f => filtrarPorPermissao(f.key));
 
   const getAcessoRapidoDinamico = () => {
     if (acessosRecentes.length === 0) {

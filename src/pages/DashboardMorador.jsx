@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from "@/api/base44Client";
 import { Card, CardContent } from "@/components/ui/card";
 import AuthGuard from '../components/utils/AuthGuard';
-import { Package, AlertTriangle, Users, MessageSquare, ShoppingBag, Megaphone, Home, ChevronDown, ChevronUp, ThumbsUp, Wrench, Siren } from 'lucide-react';
+import { Package, AlertTriangle, Users, MessageSquare, ShoppingBag, Megaphone, Home, ChevronDown, ChevronUp, ThumbsUp, Siren } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { createPageUrl } from '@/utils';
@@ -387,7 +387,7 @@ export default function DashboardMorador() {
 
   // Filtrar funcionalidades baseado nas permissões do perfil morador
   // Usar cache instantâneo - nunca bloquear
-  const funcionalidadesVisiveis = filtrarItensPorPermissao(todasFuncionalidades.filter(f => f.key !== 'manutencoes'), permissoesMorador, 'morador', 'key');
+  const funcionalidadesVisiveis = filtrarItensPorPermissao(todasFuncionalidades, permissoesMorador, 'morador', 'key');
 
   // Acesso Rápido Dinâmico (2 principais que estejam visíveis)
   const acessoRapido = [
