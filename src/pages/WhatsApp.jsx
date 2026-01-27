@@ -14,6 +14,7 @@ import MoradorHeader from "../components/shared/MoradorHeader";
 import MoradorFooter from "../components/shared/MoradorFooter";
 
 export default function WhatsAppPage() {
+  const FEATURE_DISABLED = true;
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -27,6 +28,7 @@ export default function WhatsAppPage() {
 
   useEffect(() => {
     const init = async () => {
+      if (FEATURE_DISABLED) { setLoading(false); return; }
       try {
         setLoading(true);
         const role = await getUserRole();
@@ -96,6 +98,21 @@ export default function WhatsAppPage() {
     }
   };
 
+  if (FEATURE_DISABLED) {
+    return (
+      <AuthGuard>
+        <div className="min-h-screen bg-[#f7f7f7]">
+          <MoradorHeader title="WhatsApp" />
+          <div className="pt-28 pb-24 px-4 max-w-2xl mx-auto">
+            <Alert className="mb-3">
+              <AlertDescription>Envios por WhatsApp estão temporariamente desativados (modo seguro).</AlertDescription>
+            </Alert>
+          </div>
+          <MoradorFooter />
+        </div>
+      </AuthGuard>
+    );
+  }
   if (loading) {
     return (
       <AuthGuard>

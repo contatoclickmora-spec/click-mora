@@ -1,4 +1,5 @@
-import { WhatsAppConfig } from "@/entities/WhatsAppConfig";
+// Safe mode: WhatsApp service disabled globally
+// Original WhatsAppConfig import removed to avoid runtime errors
 
 /**
  * Serviço de envio de WhatsApp
@@ -305,37 +306,5 @@ export function substituirVariaveisTemplate(template, vars) {
  * @returns {Promise<{success: boolean}>}
  */
 export async function notificarNovaEncomenda(morador, codigoEncomenda, condominioId) {
-  try {
-    // Buscar template da mensagem
-    const configs = await WhatsAppConfig.filter({ condominio_id: condominioId });
-    
-    if (configs.length === 0 || !configs[0].ativo) {
-      return { success: false, error: "WhatsApp não configurado" };
-    }
-
-    const template = configs[0].mensagem_template || 
-      "📦 Olá {{nome}}, sua entrega chegou na portaria! Código: {{codigo}}. Por favor, retire assim que possível. Obrigado!";
-
-    // Preparar variáveis
-    const vars = {
-      nome: morador.nome,
-      codigo: codigoEncomenda,
-      endereco: morador.endereco || morador.apelido_endereco || ''
-    };
-
-    // Substituir variáveis
-    const mensagem = substituirVariaveisTemplate(template, vars);
-
-    // Enviar notificação
-    return await sendWhatsAppNotification(
-      condominioId,
-      morador.telefone,
-      mensagem,
-      morador.nome
-    );
-
-  } catch (error) {
-    console.error("[WhatsApp] Erro ao notificar nova encomenda:", error);
-    return { success: false, error: error.message };
-  }
+  return { success: false, error: "WhatsApp temporarily disabled (safe mode)" };
 }

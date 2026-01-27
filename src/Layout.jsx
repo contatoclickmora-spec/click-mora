@@ -38,7 +38,8 @@ import {
 import { Button } from "@/components/ui/button";
 
 
-import { ChamadosProvider, useChamados } from "@/components/utils/chamadosContext";
+// Safe mode: ChamadosProvider disabled
+// import { ChamadosProvider, useChamados } from "@/components/utils/chamadosContext";
 import { deveExibirItem, getPermissoesVersion } from "@/components/utils/permissoesUtils";
 
 const pageTitles = {
@@ -82,7 +83,7 @@ function LayoutContent({ children, currentPageName }) {
     return {};
   });
   const [permissoesVersion, setPermissoesVersion] = useState(getPermissoesVersion());
-  const { chamadosPendentes } = useChamados();
+  const chamadosPendentes = 0; // Safe mode: no background counts
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -103,28 +104,7 @@ function LayoutContent({ children, currentPageName }) {
           return;
         }
         
-        if (role.morador?.condominio_id) {
-          try {
-            const condominios = await base44.entities.Condominio.list();
-            if (abortController.signal.aborted) return;
-            
-            const condominio = condominios.find(c => c.id === role.morador.condominio_id);
-            if (condominio?.permissoes_perfis) {
-              setPermissoesPerfis(condominio.permissoes_perfis);
-              try {
-                localStorage.setItem('permissoes_cache_v2', JSON.stringify({
-                  condominioId: role.morador.condominio_id,
-                  permissoes: condominio.permissoes_perfis,
-                  timestamp: Date.now(),
-                  version: getPermissoesVersion()
-                }));
-              } catch (e) {}
-            }
-          } catch (err) {
-            if (err.name === 'CanceledError' || err.code === 'ERR_CANCELED') return;
-            // Silently fail
-          }
-        }
+        // Safe mode: skip permissions fetch to avoid background calls
         
         if (!abortController.signal.aborted) {
           setLoading(false);
@@ -147,38 +127,8 @@ function LayoutContent({ children, currentPageName }) {
 
   // Escutar atualizações de permissões em tempo real
   useEffect(() => {
-    const handlePermissoesUpdate = async (event) => {
-      setPermissoesVersion(event.detail?.version || Date.now());
-      
-      // Recarregar permissões do servidor
-      if (roleInfo?.morador?.condominio_id) {
-        try {
-          const condominios = await base44.entities.Condominio.list();
-          const cond = condominios.find(c => c.id === roleInfo.morador.condominio_id);
-          if (cond?.permissoes_perfis) {
-            setPermissoesPerfis(cond.permissoes_perfis);
-            }
-            } catch (err) {
-            // Silently fail
-            }
-      }
-    };
-
-    window.addEventListener('permissoes_updated', handlePermissoesUpdate);
-    
-    // Verificar periodicamente se versão mudou (WebView/outros tabs)
-    const PERMISSION_CHECK_INTERVAL = 1000; // 1 segundo para sincronização mais rápida
-    const checkInterval = setInterval(() => {
-      const currentVersion = getPermissoesVersion();
-      if (currentVersion !== permissoesVersion) {
-        handlePermissoesUpdate({ detail: { version: currentVersion } });
-      }
-    }, PERMISSION_CHECK_INTERVAL);
-
-    return () => {
-      window.removeEventListener('permissoes_updated', handlePermissoesUpdate);
-      clearInterval(checkInterval);
-    };
+    // Safe mode: disable permission refresh listeners and intervals
+    return () => {};
   }, [roleInfo?.morador?.condominio_id, permissoesVersion]);
 
   const handleLogout = async () => {
@@ -485,8 +435,6 @@ function LayoutContent({ children, currentPageName }) {
 
 export default function Layout({ children, currentPageName }) {
   return (
-    <ChamadosProvider>
-      <LayoutContent children={children} currentPageName={currentPageName} />
-    </ChamadosProvider>
+    <LayoutContent children={children} currentPageName={currentPageName} />
   );
 }
