@@ -280,6 +280,7 @@ function LayoutContent({ children, currentPageName }) {
         { title: "Moradores", url: createPageUrl("Moradores"), icon: Users },
         { title: "Funcionários", url: createPageUrl("Funcionarios"), icon: UserCheck },
         { title: "Templates", url: createPageUrl("Templates"), icon: MessageSquare },
+        { title: "WhatsApp", url: createPageUrl("WhatsApp"), icon: MessageSquare },
         { title: "Permissões", url: createPageUrl("Permissoes"), icon: Shield },
         { 
           title: "SOS", 
